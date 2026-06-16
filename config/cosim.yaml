@@ -1,0 +1,58 @@
+# Co-simulation mode — NO NuRec required
+#
+# Use this when:
+#   - NuRec Docker doesn't support your GPU (e.g. RTX 5090 / Blackwell)
+#   - You have self-built 3DGS maps (standard PLY export)
+#   - You want full control over the rendering pipeline
+#
+# Architecture:
+#   CARLA (physics/traffic) → camera pose → gsplat renderer → ROS2/DDS
+
+mode: cosim
+
+carla:
+  host: "127.0.0.1"
+  port: 2000
+  timeout: 30.0
+  ego_role_name: "ego"
+  # CARLA handles physics/traffic only — do NOT use CARLA RGB sensors for perception
+  spawn_traffic: true
+  num_traffic_vehicles: 30
+  sync_mode: true
+  fixed_delta_seconds: 0.05  # 20 Hz
+
+renderer:
+  backend: "gsplat"          # gsplat | mock
+  device: "cuda"             # RTX 5090: use PyTorch cu128+ build, NOT NuRec Docker
+  # Standard 3DGS PLY from your training pipeline (NOT NuRec .usdz)
+  scene_path: "assets/scenes/your_map.ply"
+
+alignment:
+  # Tune these so CARLA ego pose lines up with your 3DGS scene origin
+  offset: [0.0, 0.0, 0.0]
+  yaw_offset_deg: 0.0
+  width: 1920
+  height: 1080
+  fov: 120.0
+  near_plane: 0.01
+  far_plane: 1000.0
+  background_color: [0.0, 0.0, 0.0]
+
+camera:
+  # Offset relative to ego vehicle (CARLA coordinate system)
+  position: [2.0, 0.0, 1.5]
+  rotation: [0.0, 0.0, 0.0]  # roll, pitch, yaw
+
+ros2:
+  # Images published by the renderer node, NOT by CARLA's built-in camera
+  namespace: "world_sim"
+  ego_name: "ego"
+  frame_id: "front_camera"
+  publish_rate_hz: 20
+  topics:
+    image: "camera/front/image_raw"
+    camera_info: "camera/front/camera_info"
+    odometry: "localization/kinematic_state"
+
+# Optional: reference SplatSim for production use
+# https://github.com/tier4/splatsim

@@ -1,0 +1,51 @@
+# NuRec multi-camera layout (matches NVIDIA Physical AI AV sensor rig)
+# These names align with camera_ids in NuRec USDZ metadata.yaml
+
+cameras:
+  - name: camera_front_wide_120fov
+    ros_name: front_wide_120fov
+    width: 1920
+    height: 1080
+    fov: 120
+    position: [2.0, 0.0, 1.5]
+    rotation: [0.0, 0.0, 0.0]
+
+  - name: camera_front_tele_30fov
+    ros_name: front_tele_30fov
+    width: 1920
+    height: 1080
+    fov: 30
+    position: [2.0, 0.0, 1.5]
+    rotation: [0.0, 0.0, 0.0]
+
+  - name: camera_cross_left_120fov
+    ros_name: cross_left_120fov
+    width: 1920
+    height: 1080
+    fov: 120
+    position: [1.5, -0.5, 1.4]
+    rotation: [0.0, -55.0, 0.0]
+
+  - name: camera_cross_right_120fov
+    ros_name: cross_right_120fov
+    width: 1920
+    height: 1080
+    fov: 120
+    position: [1.5, 0.5, 1.4]
+    rotation: [0.0, 55.0, 0.0]
+
+  - name: camera_rear_left_70fov
+    ros_name: rear_left_70fov
+    width: 1920
+    height: 1080
+    fov: 70
+    position: [-1.0, -0.5, 1.4]
+    rotation: [0.0, -135.0, 0.0]
+
+  - name: camera_rear_right_70fov
+    ros_name: rear_right_70fov
+    width: 1920
+    height: 1080
+    fov: 70
+    position: [-1.0, 0.5, 1.4]
+    rotation: [0.0, 135.0, 0.0]

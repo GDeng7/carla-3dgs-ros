@@ -1,0 +1,13 @@
+# Co-simulation dependencies (NO NuRec)
+# Install on Ubuntu 22.04 with RTX 5090:
+#
+#   pip install torch --index-url https://download.pytorch.org/whl/cu128
+#   pip install -r requirements-cosim.txt
+
+numpy>=1.24
+PyYAML>=6.0
+plyfile>=1.0
+gsplat>=1.4.0
+
+# ROS2 bridge — install via apt, not pip:
+#   sudo apt install ros-humble-rclpy ros-humble-sensor-msgs ros-humble-nav-msgs

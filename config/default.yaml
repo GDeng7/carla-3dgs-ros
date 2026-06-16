@@ -1,0 +1,54 @@
+# CARLA + 3DGS + ROS2/DDS configuration
+#
+# Two modes:
+#   nurec  — NVIDIA NuRec Docker + CARLA replay (quick start, less control)
+#   cosim  — Co-simulation like SplatSim (CARLA physics + own 3DGS renderer)
+#
+# For DriveArena / World Simulator lab, use: config/cosim.yaml
+
+mode: nurec
+
+carla:
+  host: "127.0.0.1"
+  port: 2000
+  timeout: 30.0
+  # Launch CARLA with native ROS2 DDS bridge:
+  #   ./CarlaUE4.sh --ros2
+  ros2_enabled: true
+  ego_role_name: "ego"
+
+nurec:
+  # NuRec gRPC Docker image (set by install_nurec.sh or manually)
+  image: "docker.io/carlasimulator/nvidia-nurec-grpc:0.2.0"
+  grpc_port: 46435
+  cuda_visible_devices: "0"
+  # Path to CARLA's official NuRec examples (optional override)
+  # carla_nurec_examples: "${CARLA_ROOT}/PythonAPI/examples/nvidia/nurec"
+
+scene:
+  # Default scene — point to your self-created or downloaded NuRec USDZ
+  usdz_path: "assets/scenes/example.usdz"
+  camera_config: "config/cameras.yaml"
+
+replay:
+  move_spectator: true
+  save_images: false
+  output_dir: "output/captured_images"
+  tick_sync: true
+  fixed_delta_seconds: 0.05  # 20 Hz
+
+ros2:
+  namespace: "carla"
+  ego_name: "ego"
+  frame_id: "map"
+  publish_rate_hz: 20
+  topics:
+    front_wide_image: "front_wide_120fov/image"
+    front_tele_image: "front_tele_30fov/image"
+    cross_left_image: "cross_left_120fov/image"
+    cross_right_image: "cross_right_120fov/image"
+    rear_left_image: "rear_left_70fov/image"
+    rear_right_image: "rear_right_70fov/image"
+    odometry: "odometry"
+    vehicle_status: "vehicle_status"
+    clock: "clock"
