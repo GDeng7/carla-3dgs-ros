@@ -1,0 +1,11 @@
+{
+  "description": "Sample ego poses — replace with poses exported from CARLA on Linux",
+  "poses": [
+    {"t": 0.0, "x": 0.0, "y": 0.0, "z": 0.0, "yaw_deg": 0.0},
+    {"t": 0.05, "x": 0.5, "y": 0.0, "z": 0.0, "yaw_deg": 0.0},
+    {"t": 0.10, "x": 1.0, "y": 0.0, "z": 0.0, "yaw_deg": 0.0},
+    {"t": 0.15, "x": 1.5, "y": 0.0, "z": 0.0, "yaw_deg": 0.0},
+    {"t": 0.20, "x": 2.0, "y": 0.1, "z": 0.0, "yaw_deg": 2.0},
+    {"t": 0.25, "x": 2.5, "y": 0.2, "z": 0.0, "yaw_deg": 4.0}
+  ]
+}

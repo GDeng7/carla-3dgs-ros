@@ -1,0 +1,9 @@
+# macOS co-simulation dependencies (no CARLA, no CUDA)
+numpy>=1.24
+PyYAML>=6.0
+plyfile>=1.0
+opencv-python>=4.8.0
+
+# Optional: ROS2 via Homebrew (not pip)
+#   brew install ros-humble-desktop
+#   source /opt/ros/humble/setup.zsh

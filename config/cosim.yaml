@@ -24,19 +24,18 @@ carla:
 renderer:
   backend: "gsplat"          # gsplat | mock
   device: "cuda"             # RTX 5090: use PyTorch cu128+ build, NOT NuRec Docker
-  # Standard 3DGS PLY from your training pipeline (NOT NuRec .usdz)
   scene_path: "assets/scenes/your_map.ply"
-
-alignment:
-  # Tune these so CARLA ego pose lines up with your 3DGS scene origin
-  offset: [0.0, 0.0, 0.0]
-  yaw_offset_deg: 0.0
   width: 1920
   height: 1080
   fov: 120.0
   near_plane: 0.01
   far_plane: 1000.0
   background_color: [0.0, 0.0, 0.0]
+
+alignment:
+  # Tune these so CARLA ego pose lines up with your 3DGS scene origin
+  offset: [0.0, 0.0, 0.0]
+  yaw_offset_deg: 0.0
 
 camera:
   # Offset relative to ego vehicle (CARLA coordinate system)

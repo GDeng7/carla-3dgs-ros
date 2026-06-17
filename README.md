@@ -4,7 +4,8 @@ Python toolkit for rendering **3D Gaussian Splatting (3DGS) maps** in **CARLA** 
 
 | Mode | Command | When to use |
 |------|---------|-------------|
-| **Co-simulation** (Grok / SplatSim) | `python scripts/run_cosim.py` | Building your own DriveArena / World Simulator lab |
+| **Co-simulation (Linux)** | `python scripts/run_cosim.py` | CARLA + gsplat on RTX 5090 — production lab |
+| **Co-simulation (macOS)** | `python scripts/run_cosim_macos.py` | Develop/test on Mac without CARLA |
 | **NuRec integrated** | `python scripts/run_replay.py` | Quick start with NVIDIA NuRec Docker + sample USDZ |
 
 See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for the full comparison.
@@ -49,7 +50,34 @@ CARLA + NuRec Docker (gRPC)  →  bundled replay  →  ROS2
 | **Python 3.10** | 3.11+ not supported by NuRec installer |
 | **ROS2 Humble** (recommended) | For DDS bridge |
 
-> **Note:** CARLA and NuRec do not run on macOS. Use this repo on a Linux machine with an NVIDIA GPU. You can inspect USDZ scenes on any OS.
+> **Note:** CARLA and NuRec do not run on macOS. Use `run_cosim_macos.py` on Mac for development; use `run_cosim.py` on Linux with your RTX 5090 for full co-simulation.
+
+## macOS co-simulation (no CARLA)
+
+Develop the pose → render → ROS pipeline on your Mac:
+
+```bash
+pip install -r requirements-macos.txt
+python scripts/run_cosim_macos.py --config config/cosim_macos.yaml
+```
+
+| Component | macOS replacement |
+|-----------|-------------------|
+| CARLA physics | Synthetic pose simulator (`straight`, `circle`, or `replay` JSON) |
+| gsplat (CUDA) | CPU `preview` renderer (projects your PLY Gaussians) |
+| ROS2 | Optional (`--ros` if ROS2 Humble installed via Homebrew) |
+
+**Workflow:** Record ego poses on Linux with CARLA → export JSON → replay on Mac with `trajectory: replay`.
+
+```bash
+# Generate a pose template
+python scripts/run_cosim_macos.py --export-pose-template assets/poses/my_recording.json
+
+# Save rendered frames (no display needed)
+python scripts/run_cosim_macos.py --save-frames --no-preview
+```
+
+Press `q` in the preview window to stop.
 
 ## Quick start
 
